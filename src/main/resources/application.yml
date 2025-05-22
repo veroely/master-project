@@ -12,9 +12,6 @@ feign:
 external-services:
   electricity-provider:
     url: http://localhost:9090
-    timeout:
-      connection: 5000
-      read: 5000
 
 management:
   endpoints:
@@ -24,17 +21,18 @@ management:
   endpoint:
     health:
       show-details: always
-#    metrics:
-#      enabled: true
-#  metrics:
-#    export:
-#      prometheus:
-#        enabled: true
-#    distribution:
-#      percentiles-histogram: "http.server.requests,http.client.requests"
-#    tags:
-#      application: ${spring.application.name}
-#      environment: ${spring.profiles.active:local}
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        http.client.requests: true
+    tags:
+      application: ${spring.application.name}
+      environment: ${spring.profiles.active:local}
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 resilience4j:
   circuitbreaker:
